@@ -1,5 +1,13 @@
 # Week2ProjectByCristhianMurcia
 
+ Important!!!
+ 
+ 1. To execute this code all the files must be inside the same folder.
+ 2. Please set your working directory to the folder where these files are allocated (i.e. cd ./Week2ProjectByCristhianMurcia)
+    when typing ls in linux or dir in windows you should see the following files : Classes.py, InterfaceFunctions.py and       main.py
+  3. You should install the libriries shown inside the requirements.txt file
+ 4. To execute the code please run the script main.py in the console. You can try :  python main.py or from a development environment.
+
 This project comprises the project proposed during the second week of the python bootcamp offered by Globant.
 
 The goal is to develop a system that accomplishes the following user stories:
