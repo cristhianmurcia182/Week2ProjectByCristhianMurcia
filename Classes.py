@@ -8,12 +8,11 @@ Created on Sat Nov  3 08:39:44 2018
 import datetime
 
 
-class Contact(object):
-    
+class Contact(object):    
     """
     Representation of a single contact.
     """
-
+    
     def __init__(self, name, lastName, age, phoneNumber, email):            
         """
         Initializes a Contact instance, saves all parameters as attributes
@@ -96,11 +95,13 @@ class Contact(object):
         """
         Sets the contact's phone number.
         The parameter phoneNumberType is related to their usage (for instance. Home, Office, Personal)
-        """
-        
+        """        
         self.__phoneNumbers[phoneNumberType] = phoneNumber
     
     def setPhoneNumbers(self, phoneNumbers):
+        """
+        Replaces the current phoneNumbers dict
+        """
         self.__phoneNumbers = phoneNumbers
     
     def setEmail(self, email):
@@ -162,16 +163,13 @@ class ContactList(object):
         #from the most receantly added to the latest.
         self.__contactList = sorted(self.__contactList, key = lambda x : x.getDate(), reverse = True )
         
-
-    
     def findContact(self, contactName):
         """
         Finds a contact according to their full name (Name + " " + LastName)
         
         contactName : A string of the type Name LastName (for instance. 'Cristhian Murcia')
-        """
-        
-        #Finding contact
+        """       
+        #Finding contact using a dict is faster than going through a list
         try:
             contact = self.__contactListDict[contactName]
             return contact
@@ -205,6 +203,7 @@ class ContactList(object):
                     contact.setEmail(value)
                 else:
                     print(f"Could not find attribute, try one of the followings : {self.__possibleAttributes}")
+        #Updates dictionary key, which might have changed due to a new name or lastName value
         self.updateDict()
     def addAdditionalPhoneNumber(self, contactFullName, phoneNumber, phoneType = "Personal") :
         """
@@ -235,6 +234,9 @@ class ContactList(object):
             contact.setHide(False)
             
     def displayContacts(self):
+        """
+        Displays each of the contacts stored inside the contactList attribute.
+        """
         print("")
         strRepresentation = [str(i + 1) + ". " + c.__str__() for i,c in enumerate(self.__contactList) if not c .getHide()]
 
@@ -243,6 +245,11 @@ class ContactList(object):
             print("")
             
     def updateDict(self):
+        """
+        Updates the __contactListDict attibute with new keys. This function must be executed
+        after the user changes a contact name or last name since their keys are name + " " + lastName
+        """
+        print(self.__contactListDict)
         self.__contactListDict = {v.getName() + " " + v.getLastName():v for (k,v) in self.__contactListDict.items()}
         
     def getContactList(self):
@@ -254,12 +261,10 @@ class ContactList(object):
     def getName(self):
         return self.__name
     
-class User(object):
-        
+class User(object):        
     """
     Representation of a User. This class directly interacts with the ContactList and Contact classes
-    """
-    
+    """    
     def __init__(self, name, password): 
         self.__name = name
         self.__password = password
@@ -306,8 +311,7 @@ class User(object):
             else:
                 print (f"Attribute {attribute} not in {self.listAttributes}.")
         else : 
-            print (f"Contact {contactFullName} not in list.")
-        
+            print (f"Contact {contactFullName} not in list.")        
         
     def addAditionalPhoneNumer(self):
         print("Currently your list has the following contacts : ")
@@ -347,7 +351,6 @@ class User(object):
             print (f"Contact {fullName} not in list.")
     
     def showContacts(self):
-
         self.__contactList.displayContacts()
         
     def sortContacts(self):
@@ -372,15 +375,5 @@ class User(object):
         return self.__password
     
     def getContactList(self):
-        return self.__contactList
-    
-
-            
-
-
-        
-        
-
-
-
-    
+        return self.__contactList        
+   

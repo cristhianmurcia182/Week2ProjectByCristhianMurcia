@@ -9,11 +9,9 @@ import os
 import pickle
 from Classes import User
 
-
 def printMenu(userName, listName):
     "Prints the menu to be shown to the user"
     print("")
-    print(os.getcwd())
     print(f"Welcome {userName}! In this application you can perform the following actions on your newly created {listName} contact list: ")
     print("1. Add a new contact to your list.")
     print("2. Sort your list according to the date in which the contacts were added. Either starting from the most recent date or from the oldest date.")
@@ -23,11 +21,8 @@ def printMenu(userName, listName):
     print("6. Display your contact list.")
     print("7. Add an additional telephone number (more than one).")
     print("8. Save your user name and credentials.")
-    print("9. Exit the application.")
-    
-
-    
-
+    print("9. Exit menu.")
+      
 def controller(myUser):
     "Controls interactions between the user and the list"
     while True:
@@ -36,53 +31,34 @@ def controller(myUser):
         print("")
         if answer == "1" :
             myUser.addContacts()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
+            input("Hit any key to continue")
         elif answer == "2":
             myUser.sortContacts()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
+            input("Hit any key to continue")
         elif answer == "3":
             myUser.updateContact()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key :")
-            if newAnswer == "n" :
-                break
+            input("Hit any key to continue")
         elif answer == "4":
             myUser.hideContact()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
+            input("Hit any key to continue")
         elif answer == "5" :
             myUser.unhideContact()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
+            input("Hit any key to continue")
         elif answer == "6":
             myUser.showContacts()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
-        
+            input("Hit any key to continue")
         elif answer == "7":
             myUser.addAditionalPhoneNumer()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
-        
+            input("Hit any key to continue")
         elif answer == "8":
             userFile = open("".join([myUser.getUserName(), myUser.getPassword()]), "wb")
             userFile.write(pickle.dumps( myUser))
             userFile.close()
-
-
+            input("Hit any key to continue")
         elif answer == "9":
             break
         else :
             print("Option not available!!!, please pick a number between 1 and 7 according to the menu.")
-
-
 
 def newUser():
     "Creates a new user from scrath"
@@ -109,7 +85,6 @@ def loadExistingUser():
     else:
         print(f"User {userName} is not registered or the password is wrong!!")
 
-
 def initialPrompt():
     """
     Executes the application
@@ -122,8 +97,7 @@ def initialPrompt():
         print("3. Exit application.")
         selection = input("Please choose one of the following options typing a number : ")
         if selection == "1":
-            newUser()
-            break
+            newUser()            
         elif selection == "2":
             loadExistingUser()
         elif selection == "3":
