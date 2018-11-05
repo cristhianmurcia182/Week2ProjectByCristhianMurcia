@@ -7,6 +7,7 @@ Created on Sat Nov  3 08:39:44 2018
 """
 import datetime
 
+
 class Contact(object):
     
     """
@@ -250,10 +251,14 @@ class ContactList(object):
     def setContactList(self, newList):
         self.__contactList = newList
     
+    def getName(self):
+        return self.__name
+    
 class User(object):
     
-    def __init__(self, name): 
+    def __init__(self, name, password): 
         self.__name = name
+        self.__password = password
         self.__contactList = None
         self.listAttributes = Contact.contactAvailableAttributes()
     
@@ -355,83 +360,23 @@ class User(object):
             self.showContacts()
         else : 
             print("Option not found")
+    
+    def getUserName(self):
+        return self.__name
         
+    def getPassword(self):
+        return self.__password
+    
+    def getContactList(self):
+        return self.__contactList
     
 
-def printMenu(userName, listName):
-    print("")
-    print(f"Welcome {userName}! In this application you can perform the following actions on your newly created {listName} contact list: ")
-    print("1. Add a new contact to your list.")
-    print("2. Sort your list according to the date in which the contacts were added. Either starting from the most recent date or from the oldest date.")
-    print("3. Update existing contact.")
-    print("4. Hide an existing contact so that it is not shown.")
-    print("5. Unhide an existing contact so that it can be displayed.")
-    print("6. Display your contact list.")
-    print("7. Add an additional telephone number (more than one).")
-    print("8. Exit the application.")
-    
-
-
-
-def controler():
-    userName = input("To start the contact list application please type your user name : ")
-    listName = input(f"Welcome {userName}!!!! now please type the name of your contact list : ") 
-    myUser = User(userName)
-    myUser.createContactList(listName)
-
-    while True:
-        printMenu(userName, listName)
-        answer = input("Select one option from the menu, type a number (i.e. 1) : ")
-        print("")
-        if answer == "1" :
-            myUser.addContacts()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
-        elif answer == "2":
-            myUser.sortContacts()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
-        elif answer == "3":
-            myUser.updateContact()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key :")
-            if newAnswer == "n" :
-                break
-        elif answer == "4":
-            myUser.hideContact()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
-        elif answer == "5" :
-            myUser.unhideContact()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
-        elif answer == "6":
-            myUser.showContacts()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
-        
-        elif answer == "7":
-            myUser.addAditionalPhoneNumer()
-            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
-            if newAnswer == "n" :
-                break
-        
-        elif answer == "8":
-            break
-        else :
-            print("Option not available!!!, please pick a number between 1 and 7 according to the menu.")
-
+            
 
 
         
         
-        
 
-controler()
 
 
     
