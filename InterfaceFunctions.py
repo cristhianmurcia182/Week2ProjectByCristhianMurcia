@@ -12,6 +12,7 @@ from Classes import User
 
 def printMenu(userName, listName):
     print("")
+    print(os.getcwd())
     print(f"Welcome {userName}! In this application you can perform the following actions on your newly created {listName} contact list: ")
     print("1. Add a new contact to your list.")
     print("2. Sort your list according to the date in which the contacts were added. Either starting from the most recent date or from the oldest date.")
