@@ -175,7 +175,7 @@ class ContactList(object):
             contact = self.__contactListDict[contactName]
             return contact
         except KeyError:
-            print("Contact " + contactName + " Not in Current List.")
+
             return None
             
     def updateContact(self, contactFullName, attribute, value):
@@ -262,7 +262,7 @@ class User(object):
         print(f"{attributes}. If you want to stop creating contacts please press the 'q' key after submitting all the attributes.")
 
         while True:
-            print("")
+         
             name = input("1. Please enter the contact name : ") 
             lastName = input("2. Please enter the contact last name : ")  
             age = input("3. Please enter the contact age : ")  
@@ -273,65 +273,141 @@ class User(object):
             if userAnswer == 'q':
                 break
             elif userAnswer is not 'a':
-                print("Command not available plese press either 'a' to add a new contact or 'q' to exit. ")
+                print("Command not available. ")
+                break
         print("")
     def updateContact(self):
         print("Currently your list has the following contacts : ")
         self.showContacts()
-        contactFullName = input("Please enter the full name of the contact that you want to update in this format 'Name' + ' ' + 'LastName' (for instance. Cristhian Murcia) :")
-        attribute = input(f"Now enter the attribute that you want to update. You can choose one of the following : {self.listAttributes} : ")
-        value = input("Now enter the new value : ")
-        self.__contactList.updateContact(contactFullName, attribute, value)
-        print("Displaying your list after updating their contact attributes ")
-
-        self.showContacts()
+        contactFullName = input("Please enter the full name of the contact that you want to update in this format 'name' + ' ' + 'lastName' (for example Cristhian Murcia) : ")
+        if self.__contactList.findContact(contactFullName) is not None:
+            attribute = input(f"Now enter the attribute that you want to update. You can choose one of the following : {self.listAttributes} : ")
+            if attribute in   self.listAttributes :
+                value = input("Now enter the new value : ")
+                self.__contactList.updateContact(contactFullName, attribute, value)
+                print("Displaying your list after updating their contact attributes ")               
+                self.showContacts()
+            else:
+                print (f"Attribute {attribute} not in {self.listAttributes}.")
+        else : 
+            print (f"Contact {contactFullName} not in list.")
         
         
     def addAditionalPhoneNumer(self):
         print("Currently your list has the following contacts : ")
         self.showContacts()
         contactFullName = input("Please enter the full name of the contact that you want to update : ")
-        phoneType = input("Please enter the type of mobile phone (for instance Personal, Home, Office) : ")
-        phoneNumber = input("Please enter the new phone number : ")
-        self.__contactList.addAdditionalPhoneNumber(contactFullName, phoneNumber, phoneType)
-        print("Displaying the changes that you made.")
-        self.showContacts()
+        if self.__contactList.findContact(contactFullName) is not None:
+            phoneType = input("Please enter the type of mobile phone (for instance Personal, Home, Office) : ")
+            phoneNumber = input("Please enter the new phone number : ")
+            self.__contactList.addAdditionalPhoneNumber(contactFullName, phoneNumber, phoneType)
+            print("Displaying the changes that you made.")
+            self.showContacts()
+        else : 
+            print (f"Contact {contactFullName} not in list.")
         
     def hideContact(self):
         print("Currently your list has the following contacts : ")
         self.showContacts()
         fullName = input("To hide a contact please enter its full name in this format 'Name' + ' ' + 'LastName' (for instance. Cristhian Murcia) : ")
-        
-        self.__contactList.hideContact(fullName)
-        print("")
-        print("Now your list has the following contacts : ")
-        self.showContacts()
+        if self.__contactList.findContact(fullName) is not None:
+            self.__contactList.hideContact(fullName)
+            print("")
+            print("Now your list has the following contacts : ")
+            self.showContacts()
+        else : 
+            print (f"Contact {fullName} not in list.")
         
     def unhideContact(self):
         print("Currently your list has the following contacts : ")
         self.showContacts()
         fullName = input("To unhide a contact please enter its full name in this format 'Name' + ' ' + 'LastName' (for instance. Cristhian Murcia) : ")
-        self.__contactList.unhideContact(fullName)
-        print("")
-        print("Now your list has the following contacts : ")
-        self.showContacts()
+        if self.__contactList.findContact(fullName) is not None:
+            self.__contactList.unhideContact(fullName)
+            print("")
+            print("Now your list has the following contacts : ")
+            self.showContacts()
+        else : 
+            print (f"Contact {fullName} not in list.")
     
     def showContacts(self):
 
         self.__contactList.displayContacts()
+        
+    def sortContacts(self):
+        order = input("To sort starting from the most recent date to the oldest date type r otherwise type o.")
+        if order == "r":
+            self.__contactList = sorted(self.__contactList, key = lambda x : x.getDate(), reverse = True )
+            print("Displaying the changes that you made.")
+            self.showContacts()
+        elif order == "r":
+            self.__contactList = sorted(self.__contactList, key = lambda x : x.getDate(), reverse = False )    
+            print("Displaying the changes that you made.")
+            self.showContacts()
+        else : 
+            print("Option not found")
+        
+    
+
+def printMenu(userName, listName):
+    print("")
+    print(f"Welcome {userName}! In this application you can perform the following actions on your newly created {listName} contact list: ")
+    print("1. Add a new contact to your list.")
+    print("2. Sort your list according to the date in which the contacts were added. Either starting from the most recent date or from the oldest date.")
+    print("3. Update existing contact.")
+    print("4. Hide an existing contact so that it is not shown.")
+    print("5. Unhide an existing contact so that it can be displayed.")
+    print("6. Display your contact list.")
+    print("7. Exit the application.")
+    
     
 
 
-newUser = User("Cristhian")
-newUser.createContactList("Friends list")
-newUser.addContacts()
+def Controler():
+    userName = input("To start the contact list application please type your user name : ")
+    listName = input(f"Welcome {userName}!!!! now please type the name of your contact list : ") 
+    myUser = User(userName)
+    myUser.createContactList(listName)
 
-newUser.hideContact()
-newUser.unhideContact()
-newUser.updateContact()
+    while True:
+        printMenu(userName, listName)
+        answer = input("Select one option from the menu, type a number (i.e. 1) : ")
+        print("")
+        if answer == "1" :
+            myUser.addContacts()
+            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
+            if newAnswer == "n" :
+                break
+        elif answer == "2":
+            myUser.sortContacts()
+            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
+            if newAnswer == "n" :
+                break
+        elif answer == "3":
+            myUser.updateContact()
+            newAnswer = input("To stop experimenting with your list type n, to continue working type any key :")
+            if newAnswer == "n" :
+                break
+        elif answer == "4":
+            myUser.hideContact()
+            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
+            if newAnswer == "n" :
+                break
+        elif answer == "5" :
+            myUser.unhideContact()
+            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
+            if newAnswer == "n" :
+                break
+        elif answer == "6":
+            myUser.showContacts()
+            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
+            if newAnswer == "n" :
+                break
+        elif answer == "7":
+            break
+        else :
+            print("Option not available!!!, please pick a number between 1 and 7 according to the menu.")
 
-newUser.showContacts()
-newUser.addAditionalPhoneNumer()
 
         
 # creates a client instance that can interact with the class contact list
@@ -340,8 +416,8 @@ newUser.addAditionalPhoneNumer()
         
         
 
-        
-    
+Controler()
+
     
         
     
