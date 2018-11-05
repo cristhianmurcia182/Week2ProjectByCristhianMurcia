@@ -244,8 +244,12 @@ class ContactList(object):
     def updateDict(self):
         self.__contactListDict = {v.getName() + " " + v.getLastName():v for (k,v) in self.__contactListDict.items()}
         
-
-
+    def getContactList(self):
+        return self.__contactList
+    
+    def setContactList(self, newList):
+        self.__contactList = newList
+    
 class User(object):
     
     def __init__(self, name): 
@@ -256,26 +260,29 @@ class User(object):
     def createContactList(self, contactListName):
         self.__contactList = ContactList(contactListName)
         
-    def addContacts(self):
+    def addContact(self):
         attributes = Contact.contactAvailableAttributes()
-        print("Welcome to the add contacts module to add a new contact please enter the following attributes : ")
-        print(f"{attributes}. If you want to stop creating contacts please press the 'q' key after submitting all the attributes.")
-
-        while True:
-         
-            name = input("1. Please enter the contact name : ") 
-            lastName = input("2. Please enter the contact last name : ")  
-            age = input("3. Please enter the contact age : ")  
-            phoneNumber = input("4. Please enter the contact phone number : ")  
-            email = input("5. Please enter the contact email : ")
-            self.__contactList.addContact(name, lastName, age, phoneNumber, email)         
-            userAnswer = input("To add a new contact hit the 'a' key, to stop adding contacts hit the q key. ")
-            if userAnswer == 'q':
-                break
-            elif userAnswer is not 'a':
-                print("Command not available. ")
-                break
-        print("")
+        print(f"Welcome to the add contacts module to add a new contact please enter the following attributes : {attributes}.")
+        name = input("1. Please enter the contact name : ") 
+        lastName = input("2. Please enter the contact last name : ")  
+        age = input("3. Please enter the contact age : ")  
+        phoneNumber = input("4. Please enter the contact phone number : ")  
+        email = input("5. Please enter the contact email : ")
+        self.__contactList.addContact(name, lastName, age, phoneNumber, email)         
+    
+    def contactGenerator(self):
+        userAnswer = input("To stop adding contacts hit the q key otherwise hit any letter. ")  
+        if userAnswer != "q":
+            yield self.addContact()
+       
+    def addContacts(self):
+        self.addContact()
+        try:
+            while True:
+                next(self.contactGenerator())
+        except StopIteration:
+            pass
+    
     def updateContact(self):
         print("Currently your list has the following contacts : ")
         self.showContacts()
@@ -335,13 +342,15 @@ class User(object):
         self.__contactList.displayContacts()
         
     def sortContacts(self):
-        order = input("To sort starting from the most recent date to the oldest date type r otherwise type o.")
+        order = input("To sort starting from the most recent date to the oldest date type r otherwise type o : ")
         if order == "r":
-            self.__contactList = sorted(self.__contactList, key = lambda x : x.getDate(), reverse = True )
+            newContactList = sorted(self.__contactList.getContactList(), key = lambda x : x.getDate(), reverse = True )
+            self.__contactList.setContactList(newContactList)
             print("Displaying the changes that you made.")
             self.showContacts()
-        elif order == "r":
-            self.__contactList = sorted(self.__contactList, key = lambda x : x.getDate(), reverse = False )    
+        elif order == "o":
+            newContactList = sorted(self.__contactList.getContactList(), key = lambda x : x.getDate(), reverse = False )    
+            self.__contactList.setContactList(newContactList)
             print("Displaying the changes that you made.")
             self.showContacts()
         else : 
@@ -358,12 +367,13 @@ def printMenu(userName, listName):
     print("4. Hide an existing contact so that it is not shown.")
     print("5. Unhide an existing contact so that it can be displayed.")
     print("6. Display your contact list.")
-    print("7. Exit the application.")
-    
+    print("7. Add an additional telephone number (more than one).")
+    print("8. Exit the application.")
     
 
 
-def Controler():
+
+def controler():
     userName = input("To start the contact list application please type your user name : ")
     listName = input(f"Welcome {userName}!!!! now please type the name of your contact list : ") 
     myUser = User(userName)
@@ -403,31 +413,25 @@ def Controler():
             newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
             if newAnswer == "n" :
                 break
+        
         elif answer == "7":
+            myUser.addAditionalPhoneNumer()
+            newAnswer = input("To stop experimenting with your list type n, to continue working type any key : ")
+            if newAnswer == "n" :
+                break
+        
+        elif answer == "8":
             break
         else :
             print("Option not available!!!, please pick a number between 1 and 7 according to the menu.")
 
 
-        
-# creates a client instance that can interact with the class contact list
-        
+
         
         
         
 
-Controler()
+controler()
 
-    
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
