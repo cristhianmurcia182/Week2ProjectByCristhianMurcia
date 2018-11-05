@@ -117,7 +117,7 @@ def initialPrompt():
     print("------------------------------------")
     print("Welcome to the contact list application.")
     while True:
-        print("1. Creat a new user.")
+        print("1. Create a new user.")
         print("2. Load Existing user.")
         print("3. Exit application.")
         selection = input("Please choose one of the following options typing a number : ")
