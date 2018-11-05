@@ -255,6 +255,10 @@ class ContactList(object):
         return self.__name
     
 class User(object):
+        
+    """
+    Representation of a User. This class directly interacts with the ContactList and Contact classes
+    """
     
     def __init__(self, name, password): 
         self.__name = name

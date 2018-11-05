@@ -11,6 +11,7 @@ from Classes import User
 
 
 def printMenu(userName, listName):
+    "Prints the menu to be shown to the user"
     print("")
     print(os.getcwd())
     print(f"Welcome {userName}! In this application you can perform the following actions on your newly created {listName} contact list: ")
@@ -28,6 +29,7 @@ def printMenu(userName, listName):
     
 
 def controller(myUser):
+    "Controls interactions between the user and the list"
     while True:
         printMenu(myUser.getUserName(), myUser.getContactList().getName())
         answer = input("Select one option from the menu, type a number (i.e. 1) : ")
@@ -83,6 +85,7 @@ def controller(myUser):
 
 
 def newUser():
+    "Creates a new user from scrath"
     userName = input("To start the contact list application please type your user name : ")
     password = input("Please insert a password consisting of only numbers : ")
     listName = input(f"Welcome {userName}!!!! now please type the name of your contact list : ") 
@@ -91,6 +94,7 @@ def newUser():
     controller(myUser)
 
 def loadExistingUser():
+    "Loads an existing user. This user must be inside the current working directory (where the .py scripts lie). Hence, before running this project the user must define the working directory in advance"
     userName = input("Please type your user name : ")
     password = input("Please insert your password : ")
     lookingFor = userName + password   
@@ -107,6 +111,9 @@ def loadExistingUser():
 
 
 def initialPrompt():
+    """
+    Executes the application
+    """
     print("------------------------------------")
     print("Welcome to the contact list application.")
     while True:

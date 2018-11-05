@@ -8,4 +8,5 @@ Created on Mon Nov  5 16:06:12 2018
 
 from InterfaceFunctions import initialPrompt
 
+#This function executes the application
 initialPrompt()
