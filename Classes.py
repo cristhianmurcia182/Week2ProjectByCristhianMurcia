@@ -29,7 +29,7 @@ class Contact(object):
         self.__hide = False
         
     def __str__(self):
-        return f"name : {self.__name}, lastName : {self.__lastName}, age : {self.__age}, phoneNumber : {self.__phoneNumbers}, email : {self.__email} Creation Date : {self.__date}"
+        return f"name : {self.__name}, lastName : {self.__lastName}, age : {self.__age}, phoneNumber : {self.__phoneNumbers}, email : {self.__email}, Creation Date : {self.__date}"
 
     def getName(self):
         """
@@ -263,6 +263,7 @@ class ContactList(object):
     
     def getName(self):
         return self.__name
+    
     
 class User(object):        
     """

@@ -29,7 +29,9 @@ def printMenu(userName, listName):
     print("6. Display your contact list.")
     print("7. Add an additional telephone number (more than one).")
     print("8. Save your changes and store your user name and credentials.")
-    print("9. Exit menu.")
+    print("9. Save your list as a txt file.")
+    print("10. Open and visualize and existing txt list.")    
+    print("11. Exit menu.")
       
 def controller(myUser):
     "Controls interactions between the user and the list"
@@ -39,12 +41,14 @@ def controller(myUser):
         print("")
         if answer == "1" :
             myUser.addContacts()
+            saveFileBinary(myUser)
             input("Hit any key to continue")
         elif answer == "2":
             myUser.sortContacts()
             input("Hit any key to continue")
         elif answer == "3":
             myUser.updateContact()
+            saveFileBinary(myUser)
             input("Hit any key to continue")
         elif answer == "4":
             myUser.hideContact()
@@ -57,13 +61,19 @@ def controller(myUser):
             input("Hit any key to continue")
         elif answer == "7":
             myUser.addAditionalPhoneNumer()
+            saveFileBinary(myUser)
             input("Hit any key to continue")
         elif answer == "8":
-            userFile = open("".join([myUser.getUserName(), myUser.getPassword()]), "wb")
-            userFile.write(pickle.dumps( myUser))
-            userFile.close()
+            saveFileBinary(myUser)
             input("Hit any key to continue")
         elif answer == "9":
+            saveListText(myUser)
+            input("Hit any key to continue")
+        elif answer == "10":
+            listName = input("type the name of the .txt list that you want to open please include the extension : ")
+            openExistingList(listName)
+            input("Hit any key to continue")        
+        elif answer == "11":
             break
         else :
             print("Option not available!!!, please pick a number between 1 and 7 according to the menu.")
@@ -113,4 +123,31 @@ def initialPrompt():
         else:
             print("Choose a correct option")
             
-            
+def saveFileBinary(myUser):
+    userFile = open("".join([myUser.getUserName(), myUser.getPassword()]), "wb")
+    userFile.write(pickle.dumps( myUser))
+    userFile.close()          
+
+def saveListText(myUser):
+    f1 = open(myUser.getContactList().getName() + ".txt", "w")
+    contactList = myUser.getContactList().getContactList()
+    for c in contactList:
+        information = c.__str__()
+        f1.write(information + "\n")
+    f1.close()
+    
+def openExistingList(listName):
+    try:
+        f2 = open(listName, "r")
+        for line in f2.readlines():
+            print(line.replace("\n", ""))
+        f2.close()
+    except FileNotFoundError:
+        print("File not found! your directory has the following txt files")
+        my_dir = os.getcwd()
+        file_list = [ f for f in os.listdir(my_dir) if f.endswith(".txt") ]
+        print(file_list)
+    
+    
+
+    
