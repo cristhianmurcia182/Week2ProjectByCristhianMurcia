@@ -9,10 +9,18 @@ import os
 import pickle
 from Classes import User
 
+def decoratePrompt(func):
+    def wrapper(*args):
+        print("------------------------------------")
+        func(*args)
+        print("------------------------------------")
+    return wrapper
+
+@decoratePrompt
 def printMenu(userName, listName):
     "Prints the menu to be shown to the user"
-    print("")
     print(f"Welcome {userName}! In this application you can perform the following actions on your newly created {listName} contact list: ")
+    print("")
     print("1. Add a new contact to your list.")
     print("2. Sort your list according to the date in which the contacts were added. Either starting from the most recent date or from the oldest date.")
     print("3. Update existing contact.")
