@@ -249,8 +249,11 @@ class ContactList(object):
         Updates the __contactListDict attibute with new keys. This function must be executed
         after the user changes a contact name or last name since their keys are name + " " + lastName
         """
-        print(self.__contactListDict)
-        self.__contactListDict = {v.getName() + " " + v.getLastName():v for (k,v) in self.__contactListDict.items()}
+        newContactDict = {}
+        for c in self.__contactList:
+            newKey = c.getName() + " " + c.getLastName()
+            newContactDict[newKey] = c
+        self.__contactListDict = newContactDict
         
     def getContactList(self):
         return self.__contactList
