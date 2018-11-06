@@ -2,11 +2,11 @@
 
  Important!!!
  
- 1. To execute this code all the files must be inside the same folder.
+ 1. To execute this code all the files must be inside the same folder. Additionally, I used python 3!!.
  2. Please set your working directory to the folder where these files are allocated (i.e. cd ./Week2ProjectByCristhianMurcia)
     when typing ls in linux or dir in windows you should see the following files : Classes.py, InterfaceFunctions.py and       main.py
   3. You should install the libriries shown inside the requirements.txt file
- 4. To execute the code please run the script main.py in the console. You can try :  python main.py or from a development environment.
+ 4. To execute the code please run the script main.py in the console. You can try :  python3 main.py or python main.py. You could also run the script from a development environment.
 
 This project comprises the project proposed during the second week of the python bootcamp offered by Globant.
 
