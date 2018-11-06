@@ -28,7 +28,7 @@ def printMenu(userName, listName):
     print("5. Unhide an existing contact so that it can be displayed.")
     print("6. Display your contact list.")
     print("7. Add an additional telephone number (more than one).")
-    print("8. Save your user name and credentials.")
+    print("8. Save your changes and store your user name and credentials.")
     print("9. Exit menu.")
       
 def controller(myUser):
